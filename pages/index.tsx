@@ -66,7 +66,7 @@ const Home: NextPage = () => {
                 height={60}
                 alt="Celo Logo"
               />
-              <span className="font-openSans">Hardfork Monitor v1.7.0</span>
+              <span className="font-openSans">🍮 Flan Hardfork Monitor (v1.7.0)</span>
             </h1>
             <a
               className="flex flex-row items-center cursor-pointer"
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
           </div>
           <h2 className="text-lg font-semibold mt-2 font-openSans">
             <i>
-              Hardfork is scheduled for about November 9th, 2022 at 08:30 AM PST
+              Hardfork is scheduled for November 9th 2022, around 16:30 - 17:00 UTC (8:30 - 9:00am PDT))
             </i>
           </h2>
           <h3 className="text-md font-openSans">
@@ -95,6 +95,18 @@ const Home: NextPage = () => {
             >
               here.
             </a>
+
+            Validators, if you agree with this hard fork, please upgrade both your validator nodes 
+            and proxies to v1.7.0 and fill out <a
+              href="https://forms.gle/jJ64hQ9DST77VnzX7"
+              target={"_blank"}
+              rel="noreferrer"
+              className="text-blue-500"
+            >
+              this
+            </a>
+            form to help us keep track of who has upgraded.
+
           </h3>
 
           <section className="mt-16 flex flex-row justify-start items-center">
