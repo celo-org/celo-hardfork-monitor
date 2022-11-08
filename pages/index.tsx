@@ -103,7 +103,7 @@ const Home: NextPage = () => {
               rel="noreferrer"
               className="text-blue-500"
             >
-              this
+              this{" "}
             </a>
             form to help us keep track of who has upgraded.
             </p>
