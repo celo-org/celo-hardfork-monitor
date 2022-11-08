@@ -106,7 +106,7 @@ const Home: NextPage = () => {
               this
             </a>
             form to help us keep track of who has upgraded.
-            <p>
+            </p>
           </h3>
 
           <section className="mt-16 flex flex-row justify-start items-center">
