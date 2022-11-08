@@ -95,7 +95,7 @@ const Home: NextPage = () => {
             >
               here.
             </a>
-
+          <p>
             Validators, if you agree with this hard fork, please upgrade both your validator nodes 
             and proxies to v1.7.0 and fill out <a
               href="https://forms.gle/jJ64hQ9DST77VnzX7"
@@ -106,7 +106,7 @@ const Home: NextPage = () => {
               this
             </a>
             form to help us keep track of who has upgraded.
-
+            <p>
           </h3>
 
           <section className="mt-16 flex flex-row justify-start items-center">
