@@ -1,6 +1,6 @@
 import { BlockTransactionString } from "./node_modules/web3-eth/types/index.d";
 
-export const hardForkBlock = 16048700;
+export const hardForkBlock = 16067596;
 
 export type NodeProps = {
   url: string;
@@ -22,3 +22,5 @@ export const nodes: NodeProps[] = [
     name: "Ferno",
   },
 ];
+1667911907 - 16048778;
+1668006000 - 1667911907;
