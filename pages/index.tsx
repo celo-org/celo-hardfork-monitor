@@ -71,7 +71,7 @@ const Home: NextPage = () => {
         </Head>
 
         <main className="mx-auto max-w-5xl">
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-col lg:flex-row justify-between items-center">
             <h1 className="text-4xl font-semibold mt-10 flex flex-row items-center">
               <Image
                 src="/celo-logo-2.png"
@@ -79,12 +79,12 @@ const Home: NextPage = () => {
                 height={60}
                 alt="Celo Logo"
               />
-              <span className="font-openSans">
+              <span className="lg:text-4xl text-2xl font-openSans">
                 🍮 Flan Hardfork Monitor (v1.7.0)
               </span>
             </h1>
             <a
-              className="flex flex-row items-center cursor-pointer"
+              className="mt-3 lg:mt-1 flex flex-row items-center cursor-pointer"
               href={`https://explorer.celo.org/mainnet/block/${currBlock}/transactions`}
               target={"_blank"}
               rel="noreferrer"
