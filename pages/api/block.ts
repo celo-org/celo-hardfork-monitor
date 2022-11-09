@@ -42,9 +42,9 @@ export default async function handler(
         // add block to the list and limit the blocks to latest 30 blocks
         lastPolled[node.name].blocks.unshift(block);
         // only keep top 30 blocks in lastpolled
-        if (lastPolled[node.name].blocks.length > 30) {
+        if (lastPolled[node.name].blocks.length > 10) {
           lastPolled[node.name].blocks.splice(
-            30,
+            10,
             lastPolled[node.name].blocks.length
           );
         }

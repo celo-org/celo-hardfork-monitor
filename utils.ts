@@ -22,5 +22,3 @@ export const nodes: NodeProps[] = [
     name: "Ferno",
   },
 ];
-1667911907 - 16048778;
-1668006000 - 1667911907;

@@ -17,15 +17,27 @@ const Home: NextPage = () => {
   const [currBlock, setCurrBlock] = useState<number>();
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
+  const [hardForkTimestamp, setHardForkTimestamp] = useState<Date | null>(null);
 
   useEffect(() => {
     fetchBlockData();
     const interval = setInterval(() => {
       // call the function to fetch the data
       fetchBlockData();
+      console.log("hardForkTimestamp :>> ", hardForkTimestamp);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  const calcTimeRemaining = (currentBlockNumber: number) => {
+    var remainingTimeInSec = (hardForkBlock - currentBlockNumber!) * 5;
+    console.log("remainingTimeInSec :>> ", remainingTimeInSec);
+    var hardForkTimestampTemp = new Date();
+    hardForkTimestampTemp.setSeconds(
+      hardForkTimestampTemp.getSeconds() + remainingTimeInSec
+    );
+    setHardForkTimestamp(hardForkTimestampTemp);
+  };
 
   // fetch the data from the API
   const fetchBlockData = async () => {
@@ -33,10 +45,11 @@ const Home: NextPage = () => {
     const data: ResProp = await response.json();
     setData(null);
     setData(data.blocks);
-    console.log("Blocks s:>> ", data.blocks["Ferno"].blocks.length);
-    console.log("Blocks List :>> ", data.blocks["Ferno"].blocks);
     setCurrBlock(data.blockNumber ?? 0);
     checkForHardFork(data.blockNumber);
+    if (!hardForkTimestamp) {
+      calcTimeRemaining(data.blockNumber);
+    }
   };
 
   const checkForHardFork = async (blockNumber: number) => {
@@ -44,7 +57,7 @@ const Home: NextPage = () => {
       setShowConfetti(true);
       setInterval(() => {
         setShowConfetti(false);
-      }, 20000);
+      }, 15000);
     }
   };
 
@@ -66,7 +79,9 @@ const Home: NextPage = () => {
                 height={60}
                 alt="Celo Logo"
               />
-              <span className="font-openSans">🍮 Flan Hardfork Monitor (v1.7.0)</span>
+              <span className="font-openSans">
+                🍮 Flan Hardfork Monitor (v1.7.0)
+              </span>
             </h1>
             <a
               className="flex flex-row items-center cursor-pointer"
@@ -82,7 +97,8 @@ const Home: NextPage = () => {
           </div>
           <h2 className="text-lg font-semibold mt-2 font-openSans">
             <i>
-              Hardfork is scheduled for November 9th 2022, around 16:30 - 17:00 UTC (8:30 - 9:00am PDT))
+              Hardfork is scheduled for November 9th 2022, around 16:30 - 17:00
+              UTC (8:30 - 9:00am PDT))
             </i>
           </h2>
           <h3 className="text-md font-openSans">
@@ -95,17 +111,18 @@ const Home: NextPage = () => {
             >
               here.
             </a>
-          <p>
-            Validators, if you agree with this hard fork, please upgrade both your validator nodes 
-            and proxies to v1.7.0 and fill out <a
-              href="https://forms.gle/jJ64hQ9DST77VnzX7"
-              target={"_blank"}
-              rel="noreferrer"
-              className="text-blue-500"
-            >
-              this{" "}
-            </a>
-            form to help us keep track of who has upgraded.
+            <p>
+              Validators, if you agree with this hard fork, please upgrade both
+              your validator nodes and proxies to v1.7.0 and fill out{" "}
+              <a
+                href="https://forms.gle/jJ64hQ9DST77VnzX7"
+                target={"_blank"}
+                rel="noreferrer"
+                className="text-blue-500"
+              >
+                this{" "}
+              </a>
+              form to help us keep track of who has upgraded.
             </p>
           </h3>
 
@@ -129,6 +146,9 @@ const Home: NextPage = () => {
               )}
             </h2>
           </section>
+          <p className="font-openSans font-lg font-semibold mt-5">
+            Estimated time for Hardfork - {hardForkTimestamp?.toUTCString()}
+          </p>
           {currBlock && hardForkBlock - currBlock < 0 && (
             <section className="font-openSans text-2xl font-bold mt-5">
               🎉 Celo Hardfork 1.7.0 is LIVE 🎉
