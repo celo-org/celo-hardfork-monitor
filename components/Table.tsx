@@ -37,7 +37,7 @@ const Table: React.FC<Props> = ({ blocksHash, blockNumber }) => {
                     <div className="flex items-center font-bold">Forno</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">v1.7.0</div>
+                    <div className="flex items-center">v1.8.0</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <a

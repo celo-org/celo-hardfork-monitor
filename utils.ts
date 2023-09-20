@@ -1,6 +1,6 @@
 import { BlockTransactionString } from "./node_modules/web3-eth/types/index.d";
 
-export const hardForkBlock = 16068685;
+export const hardForkBlock = 21616000;
 
 export type NodeProps = {
   url: string;

@@ -8,7 +8,7 @@ import { useWindowSize } from "react-use";
 import BlockTable from "../components/BlockTable";
 import Table from "../components/Table";
 import styles from "../styles/Home.module.css";
-import { hardForkBlock, LastPolledProps } from "../utils";
+import { LastPolledProps, hardForkBlock } from "../utils";
 import { ResProp } from "./api/block";
 
 const Home: NextPage = () => {
@@ -24,7 +24,6 @@ const Home: NextPage = () => {
     const interval = setInterval(() => {
       // call the function to fetch the data
       fetchBlockData();
-      console.log("hardForkTimestamp :>> ", hardForkTimestamp);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -72,16 +71,13 @@ const Home: NextPage = () => {
 
         <main className="mx-auto max-w-5xl">
           <div className="flex flex-col lg:flex-row justify-between items-center">
-            <h1 className="text-4xl font-semibold mt-10 flex flex-row items-center">
+            <h1 className="text-4xl font-semibold mt-10 flex flex-col items-start">
               <Image
-                src="/celo-logo-2.png"
+                src="https://images.ctfassets.net/wr0no19kwov9/5yVbTScDuXaZE0JL0w1kL0/f626c00085927069b473e684148c36f3/Union_1_.svg"
                 width={200}
                 height={60}
                 alt="Celo Logo"
               />
-              <span className="lg:text-4xl text-2xl font-openSans">
-                🍮 Flan Hardfork Monitor (v1.7.0)
-              </span>
             </h1>
             <a
               className="mt-3 lg:mt-1 flex flex-row items-center cursor-pointer"
@@ -95,16 +91,16 @@ const Home: NextPage = () => {
               </span>
             </a>
           </div>
-          <h2 className="text-lg font-semibold mt-2 font-openSans">
-            <i>
-              Hardfork is scheduled for November 9th 2022, around 16:30 - 17:00
-              UTC (8:30 - 9:00am PDT))
-            </i>
+          <div className="lg:text-4xl font-bold text-2xl font-openSans mt-8">
+            🍞 Gingerbread Hardfork Monitor (v1.8.0)
+          </div>
+          <h2 className="text-2xl mt-8 font-openSans">
+            Hardfork is scheduled for 26 Sep 2023 17:16:01 GMT
           </h2>
-          <h3 className="text-md font-openSans">
+          <h3 className="text-sm font-openSans">
             Read about Hardfork{" "}
             <a
-              href="https://forum.celo.org/t/flan-hard-fork-proposal-nov-9th-16-30-utc/4644"
+              href="https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499"
               target={"_blank"}
               rel="noreferrer"
               className="text-blue-500"
@@ -113,45 +109,40 @@ const Home: NextPage = () => {
             </a>
             <p>
               Validators, if you agree with this hard fork, please upgrade both
-              your validator nodes and proxies to v1.7.0 and fill out{" "}
-              <a
-                href="https://forms.gle/jJ64hQ9DST77VnzX7"
-                target={"_blank"}
-                rel="noreferrer"
-                className="text-blue-500"
-              >
-                this{" "}
-              </a>
-              form to help us keep track of who has upgraded.
+              your validator nodes and proxies to v1.8.0.
             </p>
           </h3>
 
-          <section className="mt-16 flex flex-row justify-start items-center">
-            <h1 className="text-xl font-semibold mr-5 font-openSans">
-              Countdown until Hardfork
-            </h1>
-            <h2 className="text-2xl font-bold border-2 rounded-lg px-2 py-1 font-openSans">
-              {currBlock ? (
-                <div className="flex flex-row items-center">
-                  <span className="text-4xl text-red-500 font-orbitron mr-3">
-                    {hardForkBlock - currBlock}
-                  </span>
-                  {"  "}
-                  <span className="">Blocks</span>
-                </div>
-              ) : (
-                <span className="text-lg text-gray-700 mt-2">
-                  Wait for itttt
-                </span>
-              )}
-            </h2>
-          </section>
+          {currBlock && hardForkBlock - currBlock > 0 && (
+            <section className="mt-16 flex flex-row justify-start items-center">
+              <>
+                <h1 className="text-xl font-semibold mr-5 font-openSans">
+                  Countdown until Hardfork
+                </h1>
+                <h2 className="text-2xl font-bold border-2 rounded-lg px-2 py-1 font-openSans">
+                  {currBlock ? (
+                    <div className="flex flex-row items-center">
+                      <span className="text-4xl text-red-500 font-orbitron mr-3">
+                        {hardForkBlock - currBlock}
+                      </span>
+                      {"  "}
+                      <span className="">Blocks</span>
+                    </div>
+                  ) : (
+                    <span className="text-lg text-gray-700 mt-2">
+                      Wait for itttt
+                    </span>
+                  )}
+                </h2>
+              </>
+            </section>
+          )}
           <p className="font-openSans font-lg font-semibold mt-5">
             Estimated time for Hardfork - {hardForkTimestamp?.toUTCString()}
           </p>
-          {currBlock && hardForkBlock - currBlock < 0 && (
+          {currBlock && hardForkBlock - currBlock <= 0 && (
             <section className="font-openSans text-2xl font-bold mt-5">
-              🎉 Celo Hardfork 1.7.0 is LIVE 🎉
+              🎉 Celo Hardfork 1.8.0 is LIVE 🎉
             </section>
           )}
 
