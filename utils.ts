@@ -19,6 +19,6 @@ export const nodes: NodeProps[] = [
   {
     url: "https://forno.celo.org",
     explorer: "https://explorer.celo.org/blocks/%s",
-    name: "Ferno",
+    name: "Forno",
   },
 ];

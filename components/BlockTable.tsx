@@ -26,7 +26,7 @@ const BlockTable: React.FC<Props> = ({ blocks }) => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 font-openSans">
-                {blocks["Ferno"].blocks.map((block) => {
+                {blocks["Forno"].blocks.map((block) => {
                   return (
                     <tr key={block.number}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -35,7 +35,7 @@ const BlockTable: React.FC<Props> = ({ blocks }) => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <a
                           href={`https://explorer.celo.org/mainnet/block/${block.number}/transactions`}
-                          className="text-sm text-blue-500"
+                          className="text-sm text-green-500"
                           target={"_blank"}
                           rel="noreferrer"
                         >
@@ -45,7 +45,7 @@ const BlockTable: React.FC<Props> = ({ blocks }) => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <a
                           href={`https://explorer.celo.org/mainnet/block/${block.hash}/transactions`}
-                          className="text-sm text-blue-500"
+                          className="text-sm text-green-500"
                           target={"_blank"}
                           rel="noreferrer"
                         >

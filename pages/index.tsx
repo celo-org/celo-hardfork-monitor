@@ -70,7 +70,7 @@ const Home: NextPage = () => {
         </Head>
 
         <main className="mx-auto max-w-5xl">
-          <div className="flex flex-col lg:flex-row justify-between items-center">
+          <div className="flex flex-col lg:flex-row justify-between items-center flex-container">
             <h1 className="text-4xl font-semibold mt-10 flex flex-col items-start">
               <Image
                 src="https://images.ctfassets.net/wr0no19kwov9/5yVbTScDuXaZE0JL0w1kL0/f626c00085927069b473e684148c36f3/Union_1_.svg"
@@ -85,8 +85,8 @@ const Home: NextPage = () => {
               target={"_blank"}
               rel="noreferrer"
             >
-              <span className="text-lg mr-2 font-bold">Block</span>
-              <span className="text-2xl font-bold text-red-500 font-orbitron mr-3">
+              <span className="text-lg mr-2 font-bold">Current Block</span>
+              <span className="text-2xl font-bold text-green-500 font-orbitron mr-3">
                 {currBlock}
               </span>
             </a>
@@ -97,21 +97,44 @@ const Home: NextPage = () => {
           <h2 className="text-2xl mt-8 font-openSans">
             Hardfork is scheduled for 26 Sep 2023 17:16:01 GMT
           </h2>
-          <h3 className="text-sm font-openSans">
+
+          <h3 className="text-large font-openSans">
             Read about Hardfork{" "}
             <a
               href="https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499"
               target={"_blank"}
               rel="noreferrer"
-              className="text-blue-500"
+              className="text-green-500"
             >
               here.
             </a>
             <p>
-              Validators, if you agree with this hard fork, please upgrade both
-              your validator nodes and proxies to v1.8.0.
+              <em>
+                Validators, if you agree with this hard fork, please upgrade
+                both your validator nodes and proxies to v1.8.0.
+              </em>
             </p>
           </h3>
+
+          <p>
+            Estimated time for hardfork{" "}
+            {hardForkTimestamp?.toLocaleDateString()}: <strong>PST</strong>{" "}
+            {hardForkTimestamp?.toLocaleTimeString("en-US", {
+              timeZone: "PST",
+            })}{" "}
+            <strong>EST</strong>{" "}
+            {hardForkTimestamp?.toLocaleTimeString("en-US", {
+              timeZone: "EST",
+            })}{" "}
+            <strong>UTC</strong>{" "}
+            {hardForkTimestamp?.toLocaleTimeString("en-GB", {
+              timeZone: "UTC",
+            })}{" "}
+            <strong>CEST</strong>{" "}
+            {hardForkTimestamp?.toLocaleTimeString("en-DE", {
+              timeZone: "CET",
+            })}
+          </p>
 
           {currBlock && hardForkBlock - currBlock > 0 && (
             <section className="mt-16 flex flex-row justify-start items-center">
@@ -122,36 +145,34 @@ const Home: NextPage = () => {
                 <h2 className="text-2xl font-bold border-2 rounded-lg px-2 py-1 font-openSans">
                   {currBlock ? (
                     <div className="flex flex-row items-center">
-                      <span className="text-4xl text-red-500 font-orbitron mr-3">
+                      <span className="text-4xl text-green-500 font-orbitron mr-3">
                         {hardForkBlock - currBlock}
                       </span>
                       {"  "}
-                      <span className="">Blocks</span>
+                      <span className="">blocks to go</span>
                     </div>
                   ) : (
                     <span className="text-lg text-gray-700 mt-2">
-                      Wait for itttt
+                      Wait for it...
                     </span>
                   )}
                 </h2>
               </>
             </section>
           )}
-          <p className="font-openSans font-lg font-semibold mt-5">
-            Estimated time for Hardfork - {hardForkTimestamp?.toUTCString()}
-          </p>
+
           {currBlock && hardForkBlock - currBlock <= 0 && (
             <section className="font-openSans text-2xl font-bold mt-5">
-              🎉 Celo Hardfork 1.8.0 is LIVE 🎉
+              🎉 Celo Hardfork 1.8.0 is now LIVE 🎉
             </section>
           )}
 
-          {data && data["Ferno"] && (
+          {data && data["Forno"] && (
             <>
               <section className="">
                 <Table
-                  blockNumber={data["Ferno"].blocks[0].number}
-                  blocksHash={data["Ferno"].blocks[0].hash}
+                  blockNumber={data["Forno"].blocks[0].number}
+                  blocksHash={data["Forno"].blocks[0].hash}
                 />
               </section>
               <section>
