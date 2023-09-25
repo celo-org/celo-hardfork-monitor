@@ -86,7 +86,7 @@ const Home: NextPage = () => {
               rel="noreferrer"
             >
               <span className="text-lg mr-2 font-bold">Current Block</span>
-              <span className="text-2xl font-bold text-green-500 font-orbitron mr-3">
+              <span className="text-2xl font-bold text-lime-800 font-orbitron mr-3">
                 {currBlock}
               </span>
             </a>
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
               href="https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499"
               target={"_blank"}
               rel="noreferrer"
-              className="text-green-500"
+              className="text-lime-800"
             >
               here.
             </a>
@@ -145,7 +145,7 @@ const Home: NextPage = () => {
                 <h2 className="text-2xl font-bold border-2 rounded-lg px-2 py-1 font-openSans">
                   {currBlock ? (
                     <div className="flex flex-row items-center">
-                      <span className="text-4xl text-green-500 font-orbitron mr-3">
+                      <span className="text-4xl text-lime-800 font-orbitron mr-3">
                         {hardForkBlock - currBlock}
                       </span>
                       {"  "}

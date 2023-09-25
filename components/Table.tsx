@@ -42,7 +42,7 @@ const Table: React.FC<Props> = ({ blocksHash, blockNumber }) => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <a
                       href={`https://explorer.celo.org/mainnet/block/${blocksHash}/transactions`}
-                      className="text-sm text-green-500"
+                      className="text-sm text-lime-800"
                       target={"_blank"}
                       rel="noreferrer"
                     >
@@ -54,7 +54,7 @@ const Table: React.FC<Props> = ({ blocksHash, blockNumber }) => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <a
                       href={`https://explorer.celo.org/mainnet/block/${blockNumber}/transactions`}
-                      className="text-sm text-green-500"
+                      className="text-sm text-lime-800"
                     >
                       {blockNumber}
                     </a>

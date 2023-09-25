@@ -35,7 +35,7 @@ const BlockTable: React.FC<Props> = ({ blocks }) => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <a
                           href={`https://explorer.celo.org/mainnet/block/${block.number}/transactions`}
-                          className="text-sm text-green-500"
+                          className="text-sm text-lime-800"
                           target={"_blank"}
                           rel="noreferrer"
                         >
@@ -45,7 +45,7 @@ const BlockTable: React.FC<Props> = ({ blocks }) => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <a
                           href={`https://explorer.celo.org/mainnet/block/${block.hash}/transactions`}
-                          className="text-sm text-green-500"
+                          className="text-sm text-lime-800"
                           target={"_blank"}
                           rel="noreferrer"
                         >
