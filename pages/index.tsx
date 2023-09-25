@@ -18,6 +18,8 @@ const Home: NextPage = () => {
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [hardForkTimestamp, setHardForkTimestamp] = useState<Date | null>(null);
+  const [hardForkTimeRemainingInSec, sethardForkTimeRemainingInSec] =
+    useState(0);
 
   useEffect(() => {
     fetchBlockData();
@@ -36,6 +38,7 @@ const Home: NextPage = () => {
       hardForkTimestampTemp.getSeconds() + remainingTimeInSec
     );
     setHardForkTimestamp(hardForkTimestampTemp);
+    sethardForkTimeRemainingInSec(remainingTimeInSec);
   };
 
   // fetch the data from the API
@@ -46,9 +49,9 @@ const Home: NextPage = () => {
     setData(data.blocks);
     setCurrBlock(data.blockNumber ?? 0);
     checkForHardFork(data.blockNumber);
-    if (!hardForkTimestamp) {
-      calcTimeRemaining(data.blockNumber);
-    }
+    // if (!hardForkTimestamp) {
+    calcTimeRemaining(data.blockNumber);
+    // }
   };
 
   const checkForHardFork = async (blockNumber: number) => {
@@ -95,7 +98,7 @@ const Home: NextPage = () => {
             🍞 Gingerbread Hardfork Monitor (v1.8.0)
           </div>
           <h2 className="text-2xl mt-8 font-openSans">
-            Hardfork is scheduled for 26 Sep 2023 17:16:01 GMT
+            Hardfork is scheduled for 26 Sep 2023 17:16:01 UTC
           </h2>
 
           <h3 className="text-large font-openSans">
@@ -117,7 +120,16 @@ const Home: NextPage = () => {
           </h3>
 
           <p>
-            Estimated time for hardfork{" "}
+            Countdown:{" "}
+            <span className="font-bold text-lime-800 mr-3">
+              {Math.floor(hardForkTimeRemainingInSec / 60 / 60)} hours{" "}
+              {Math.floor(hardForkTimeRemainingInSec / 60) % 60} min{" "}
+              {Math.floor(hardForkTimeRemainingInSec) % 60} seconds
+            </span>
+          </p>
+
+          <p>
+            Estimated time until hardfork:
             {hardForkTimestamp?.toLocaleDateString()}: <strong>PST</strong>{" "}
             {hardForkTimestamp?.toLocaleTimeString("en-US", {
               timeZone: "PST",
