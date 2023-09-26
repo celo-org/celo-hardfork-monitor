@@ -126,13 +126,13 @@ const Home: NextPage = () => {
                 ? Math.floor(hardForkTimeRemainingInSec / 60 / 60)
                 : 0}{" "}
               hours{" "}
-              {Math.floor(hardForkTimeRemainingInSec / 60) % 60
+              {Math.floor(hardForkTimeRemainingInSec / 60) % 60 > 0
                 ? Math.floor(hardForkTimeRemainingInSec / 60) % 60
                 : 0}{" "}
               min{" "}
-              {Math.floor(hardForkTimeRemainingInSec) % 60
+              {Math.floor(hardForkTimeRemainingInSec) % 60 > 0
                 ? Math.floor(hardForkTimeRemainingInSec) % 60
-                : o}{" "}
+                : 0}{" "}
               seconds
             </span>
           </p>
