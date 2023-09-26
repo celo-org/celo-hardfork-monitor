@@ -122,9 +122,18 @@ const Home: NextPage = () => {
           <p>
             Countdown:{" "}
             <span className="font-bold text-lime-800 mr-3">
-              {Math.floor(hardForkTimeRemainingInSec / 60 / 60)} hours{" "}
-              {Math.floor(hardForkTimeRemainingInSec / 60) % 60} min{" "}
-              {Math.floor(hardForkTimeRemainingInSec) % 60} seconds
+              {Math.floor(hardForkTimeRemainingInSec / 60 / 60) > 0
+                ? Math.floor(hardForkTimeRemainingInSec / 60 / 60)
+                : 0}{" "}
+              hours{" "}
+              {Math.floor(hardForkTimeRemainingInSec / 60) % 60
+                ? Math.floor(hardForkTimeRemainingInSec / 60) % 60
+                : 0}{" "}
+              min{" "}
+              {Math.floor(hardForkTimeRemainingInSec) % 60
+                ? Math.floor(hardForkTimeRemainingInSec) % 60
+                : o}{" "}
+              seconds
             </span>
           </p>
 
