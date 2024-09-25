@@ -1,19 +1,16 @@
-/* eslint-disable react/jsx-key */
-import type { NextPage } from "next";
+import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
-import BlockTable from "../components/BlockTable";
-import Table from "../components/Table";
-import styles from "../styles/Home.module.css";
-import { LastPolledProps, hardForkBlock } from "../utils";
-import { ResProp } from "./api/block";
+import { createPublicClient, http } from "viem";
+import { celoAlfajores } from "viem/chains";
+import { nodes } from "../utils";
+
+const hardForkBlock = 26384000;
 
 const Home: NextPage = () => {
-  // set an interval for 5 sec loop in useEffect
-  const [data, setData] = useState<LastPolledProps | null>();
   const [currBlock, setCurrBlock] = useState<number>();
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
@@ -21,13 +18,45 @@ const Home: NextPage = () => {
   const [hardForkTimeRemainingInSec, sethardForkTimeRemainingInSec] =
     useState(0);
 
+  const fetchCurrentBlockNumber = async () => {
+    try {
+      const client = createPublicClient({
+        chain: celoAlfajores,
+        transport: http(nodes[0].url),
+      });
+      const currentBlockNumber = await client.getBlockNumber();
+      setCurrBlock(Number(currentBlockNumber));
+      calcTimeRemaining(Number(currentBlockNumber));
+      checkForHardFork(Number(currentBlockNumber));
+    } catch (error) {
+      console.error("Error fetching current block number:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchBlockData();
-    const interval = setInterval(() => {
-      // call the function to fetch the data
-      fetchBlockData();
-    }, 5000);
-    return () => clearInterval(interval);
+    fetchCurrentBlockNumber();
+
+    // Interval to update block number every 5 seconds
+    const blockInterval = setInterval(() => {
+      setCurrBlock((prevBlock) => {
+        if (prevBlock !== undefined) {
+          const newBlock = prevBlock + 1;
+          checkForHardFork(newBlock);
+          return newBlock;
+        }
+        return prevBlock;
+      });
+    }, 5000); // Update every 5 seconds
+
+    // Interval to update timer every second
+    const timerInterval = setInterval(() => {
+      sethardForkTimeRemainingInSec((prevTime) => prevTime - 1);
+    }, 1000); // Update every second
+
+    return () => {
+      clearInterval(blockInterval);
+      clearInterval(timerInterval);
+    };
   }, []);
 
   const calcTimeRemaining = (currentBlockNumber: number) => {
@@ -41,21 +70,8 @@ const Home: NextPage = () => {
     sethardForkTimeRemainingInSec(remainingTimeInSec);
   };
 
-  // fetch the data from the API
-  const fetchBlockData = async () => {
-    const response = await fetch("/api/block");
-    const data: ResProp = await response.json();
-    setData(null);
-    setData(data.blocks);
-    setCurrBlock(data.blockNumber ?? 0);
-    checkForHardFork(data.blockNumber);
-    // if (!hardForkTimestamp) {
-    calcTimeRemaining(data.blockNumber);
-    // }
-  };
-
   const checkForHardFork = async (blockNumber: number) => {
-    if (blockNumber - hardForkBlock == 0) {
+    if (hardForkBlock - blockNumber <= 0) {
       setShowConfetti(true);
       setInterval(() => {
         setShowConfetti(false);
@@ -65,61 +81,51 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <div
+        style={{
+          backgroundColor: "#1E002B",
+          color: "white",
+          minHeight: "100vh",
+        }}
+      >
         <Head>
-          <title>Celo Hardfork Watch Party</title>
-          <meta name="description" content="Celo Hardfork Monitor" />
+          <title>Alfajores Layer 2 Watch Party</title>
+          <meta name="description" content="Celo Migration Monitor" />
           <link rel="icon" href="/celo-logo.png" />
         </Head>
 
         <main className="mx-auto max-w-5xl">
           <div className="flex flex-col lg:flex-row justify-between items-center flex-container">
             <h1 className="text-4xl font-semibold mt-10 flex flex-col items-start">
-              <Image
-                src="https://images.ctfassets.net/wr0no19kwov9/5yVbTScDuXaZE0JL0w1kL0/f626c00085927069b473e684148c36f3/Union_1_.svg"
-                width={200}
-                height={60}
-                alt="Celo Logo"
-              />
+              <Image src="/celo.png" width={40} height={40} alt="Celo Logo" />
             </h1>
-            <a
-              className="mt-3 lg:mt-1 flex flex-row items-center cursor-pointer"
-              href={`https://explorer.celo.org/mainnet/block/${currBlock}/transactions`}
-              target={"_blank"}
-              rel="noreferrer"
-            >
+            <div>
               <span className="text-lg mr-2 font-bold">Current Block</span>
               <span className="text-2xl font-bold text-lime-800 font-orbitron mr-3">
                 {currBlock}
               </span>
-            </a>
+            </div>
           </div>
-          <div className="lg:text-4xl font-bold text-2xl font-openSans mt-8">
-            🍞 Gingerbread Hardfork Monitor (v1.8.0)
+          <div className="lg:text-4xl font-bold text-2xl text-center font-openSans mt-8">
+            Alfajores Layer 2 Watch Party
           </div>
-          <h2 className="text-2xl mt-8 font-openSans">
-            Hardfork is scheduled for 26 Sep 2023 17:16:01 UTC
+          <h2 className="text-2xl mt-8 font-openSans  text-center">
+            Layer 2 Migration is scheduled for 26 Sep 2024 10:00:00 CET
           </h2>
 
-          <h3 className="text-large font-openSans">
-            Read about Hardfork{" "}
+          <h3 className="text-large font-openSans  text-center mt-2">
+            Read about the Cel2{" "}
             <a
-              href="https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499"
+              href="https://docs.celo.org/cel2"
               target={"_blank"}
               rel="noreferrer"
               className="text-lime-800"
             >
               here.
             </a>
-            <p>
-              <em>
-                Validators, if you agree with this hard fork, please upgrade
-                both your validator nodes and proxies to v1.8.0.
-              </em>
-            </p>
           </h3>
 
-          <p>
+          <p className="text-center lg:text-4xl text-2xl mt-8">
             Countdown:{" "}
             <span className="font-bold text-lime-800 mr-3">
               {Math.floor(hardForkTimeRemainingInSec / 60 / 60) > 0
@@ -137,33 +143,13 @@ const Home: NextPage = () => {
             </span>
           </p>
 
-          <p>
-            Estimated time until hardfork:
-            {hardForkTimestamp?.toLocaleDateString()}: <strong>PST</strong>{" "}
-            {hardForkTimestamp?.toLocaleTimeString("en-US", {
-              timeZone: "PST",
-            })}{" "}
-            <strong>EST</strong>{" "}
-            {hardForkTimestamp?.toLocaleTimeString("en-US", {
-              timeZone: "EST",
-            })}{" "}
-            <strong>UTC</strong>{" "}
-            {hardForkTimestamp?.toLocaleTimeString("en-GB", {
-              timeZone: "UTC",
-            })}{" "}
-            <strong>CEST</strong>{" "}
-            {hardForkTimestamp?.toLocaleTimeString("en-DE", {
-              timeZone: "CET",
-            })}
-          </p>
-
           {currBlock && hardForkBlock - currBlock > 0 && (
-            <section className="mt-16 flex flex-row justify-start items-center">
-              <>
+            <section className="mt-16 flex flex-row justify-center items-center">
+              <div className="flex flex-col items-center">
                 <h1 className="text-xl font-semibold mr-5 font-openSans">
-                  Countdown until Hardfork
+                  Countdown until Migration
                 </h1>
-                <h2 className="text-2xl font-bold border-2 rounded-lg px-2 py-1 font-openSans">
+                <h2 className="text-2xl font-bold border-2 rounded-lg px-2 py-1 font-openSans mt-2">
                   {currBlock ? (
                     <div className="flex flex-row items-center">
                       <span className="text-4xl text-lime-800 font-orbitron mr-3">
@@ -178,28 +164,14 @@ const Home: NextPage = () => {
                     </span>
                   )}
                 </h2>
-              </>
+              </div>
             </section>
           )}
 
           {currBlock && hardForkBlock - currBlock <= 0 && (
-            <section className="font-openSans text-2xl font-bold mt-5">
-              🎉 Celo Hardfork 1.8.0 is now LIVE 🎉
+            <section className="text-center font-openSans text-2xl font-bold mt-10">
+              🎉 Celo Migration to Ethereum L2 is now LIVE 🎉
             </section>
-          )}
-
-          {data && data["Forno"] && (
-            <>
-              <section className="">
-                <Table
-                  blockNumber={data["Forno"].blocks[0].number}
-                  blocksHash={data["Forno"].blocks[0].hash}
-                />
-              </section>
-              <section>
-                <BlockTable blocks={data} />
-              </section>
-            </>
           )}
         </main>
       </div>
