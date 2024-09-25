@@ -99,7 +99,7 @@ const Home: NextPage = () => {
             <h1 className="text-4xl font-semibold mt-10 flex flex-col items-start">
               <Image src="/celo.png" width={40} height={40} alt="Celo Logo" />
             </h1>
-            <div>
+            <div className="mt-5 lg:mt-0">
               <span className="text-lg mr-2 font-bold">Current Block</span>
               <span className="text-2xl font-bold text-lime-800 font-orbitron mr-3">
                 {currBlock}
@@ -109,11 +109,11 @@ const Home: NextPage = () => {
           <div className="lg:text-4xl font-bold text-2xl text-center font-openSans mt-8">
             Alfajores Layer 2 Watch Party
           </div>
-          <h2 className="text-2xl mt-8 font-openSans  text-center">
+          <h2 className="text-2xl mt-8 font-openSans text-center px-5">
             Layer 2 Migration is scheduled for 26 Sep 2024 10:00:00 CET
           </h2>
 
-          <h3 className="text-large font-openSans  text-center mt-2">
+          <h3 className="text-large font-openSans text-center mt-2">
             Read about the Cel2{" "}
             <a
               href="https://docs.celo.org/cel2"
@@ -125,7 +125,7 @@ const Home: NextPage = () => {
             </a>
           </h3>
 
-          <p className="text-center lg:text-4xl text-2xl mt-8">
+          <p className="text-center lg:text-4xl text-2xl mt-8 px-5">
             Countdown:{" "}
             <span className="font-bold text-lime-800 mr-3">
               {Math.floor(hardForkTimeRemainingInSec / 60 / 60) > 0
@@ -173,6 +173,18 @@ const Home: NextPage = () => {
               🎉 Celo Migration to Ethereum L2 is now LIVE 🎉
             </section>
           )}
+
+          <ul className="list-disc text-start text-sm mt-12 text-white text-opacity-60 px-8">
+            <li>Get ready for the Alfajores L2 testnet launch!</li>
+            <li>
+              The hardfork is set for block 26,383,999/26,384,000 at 10 AM CET
+              on 26 Sep 2024.
+            </li>
+            <li>
+              During the migration, there will be downtime between L1 & L2 for
+              up to 6 hours, though we aim for &lt;1 hr.
+            </li>
+          </ul>
         </main>
       </div>
       {showConfetti && (
